@@ -11,12 +11,12 @@ export function ProductsSection() {
           <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <SectionTitle
               eyebrow="Produtos"
-              title="Os produtos entram em cena conforme a rolagem"
-              description="A grade foi pensada para ocupar a largura da tela com mais respiro, mais impacto e melhor leitura no desktop e no mobile."
+              title="Escolha o modelo ideal para personalizar"
+              description="Desca a pagina e veja os produtos aparecendo aos poucos, com destaque para os valores e para o estilo de cada opcao."
             />
             <p className="max-w-xl text-sm leading-7 text-white/58 sm:text-base">
-              Aqui entram apenas os valores e os destaques de cada item, sem configurador.
-              A ideia e apresentar o catalogo com mais cara de marca.
+              Aqui voce mostra ao cliente quanto custa cada modelo e quais personalizacoes
+              ele pode pedir, sem complicar a navegacao.
             </p>
           </div>
         </RevealOnScroll>

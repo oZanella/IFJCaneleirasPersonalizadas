@@ -10,8 +10,8 @@ export function AboutSection() {
         <RevealOnScroll>
           <SectionTitle
             eyebrow="Sobre a marca"
-            title="Uma landing com ritmo visual, e nao apenas uma lista de produtos"
-            description="As referencias serviram de base para o tom geral, mas a composicao, os espacamentos e a hierarquia foram redesenhados para criar algo proprio."
+            title="Personalizacao que transforma a caneleira em algo unico"
+            description="A proposta da loja e permitir que cada cliente tenha uma peça feita com a propria historia, imagem ou mensagem especial."
           />
         </RevealOnScroll>
 

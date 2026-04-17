@@ -9,26 +9,38 @@ export function FooterSection() {
       <div className="w-full">
         <RevealOnScroll className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/45">
-            Receba novidades
+            Faca seu pedido
           </p>
           <h2 className="mt-5 text-4xl font-black uppercase tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-            Um fechamento forte para manter a loja memoravel.
+            Envie sua ideia e peça sua caneleira personalizada.
           </h2>
           <p className="mt-5 text-sm leading-7 text-white/62 sm:text-base">
-            Newsletter, informacoes da marca e blocos institucionais ajudam a
-            encerrar a navegacao com mais confianca.
+            Se voce quer personalizar com foto, nome, numero, frase ou arte exclusiva,
+            fale direto com a loja pelo WhatsApp ou acompanhe o Instagram.
           </p>
 
-          <form className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              placeholder="Seu e-mail"
-              className="min-h-14 flex-1 rounded-full border border-white/20 bg-transparent px-5 text-white placeholder:text-white/35 focus:border-white focus:outline-none"
-            />
-            <Button type="submit" size="lg">
-              Enviar
-            </Button>
-          </form>
+          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
+            <a
+              href="https://wa.me/5554996655417?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20sobre%20os%20valores%20dos%20produtos%20por%20gentileza%21"
+              target="_blank"
+              rel="noreferrer"
+              className="sm:flex-1"
+            >
+              <Button size="lg" className="w-full">
+                Chamar no WPP
+              </Button>
+            </a>
+            <a
+              href="https://instagram.com/ifj.caneleiras"
+              target="_blank"
+              rel="noreferrer"
+              className="sm:flex-1"
+            >
+              <Button type="button" variant="outline" size="lg" className="w-full normal-case tracking-[0.08em]">
+                Instagram @ifj.caneleiras
+              </Button>
+            </a>
+          </div>
         </RevealOnScroll>
 
         <div className="mt-16 grid gap-6 border-t border-white/10 pt-12 lg:grid-cols-[0.9fr_1.1fr]">
@@ -56,26 +68,26 @@ export function FooterSection() {
 
           <div className="grid gap-5 sm:grid-cols-2">
             <RevealOnScroll delay={100}>
-              <Card className="bg-white/[0.03]">
+              <Card className="bg-white/3">
                 <CardContent>
                   <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-white/38">
-                    Compra segura
+                    Personalizacao sob encomenda
                   </p>
                   <p className="mt-4 text-lg text-white/82">
-                    Pagamentos facilitados, atendimento direto e experiencia premium.
+                    Cada pedido e pensado para ficar com a identidade que o cliente imaginou.
                   </p>
                 </CardContent>
               </Card>
             </RevealOnScroll>
 
             <RevealOnScroll delay={180}>
-              <Card className="bg-white/[0.03]">
+              <Card className="bg-white/3">
                 <CardContent>
                   <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-white/38">
-                    Entrega e suporte
+                    Atendimento direto
                   </p>
                   <p className="mt-4 text-lg text-white/82">
-                    Atendimento rapido para pedidos personalizados e acompanhamento da compra.
+                    Tire duvidas, envie sua referencia e combine todos os detalhes do pedido.
                   </p>
                 </CardContent>
               </Card>
