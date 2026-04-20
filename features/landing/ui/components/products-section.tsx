@@ -12,7 +12,7 @@ export function ProductsSection() {
             <SectionTitle
               eyebrow="Catálogo"
               title="Equipamentos de Alta Performance"
-              description="Do amador ao profissional, personalize seu estilo ou complete seu kit com nossos acessórios premium."
+              description="Cada detalhe importa. Comece pelas suas caneleiras."
             />
           </div>
         </RevealOnScroll>

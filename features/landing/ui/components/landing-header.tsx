@@ -9,7 +9,7 @@ export function LandingHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-360 items-center px-6 py-5 lg:px-12">
+      <div className="mx-auto flex w-full items-center px-6 py-5 lg:px-12">
         <div className="flex shrink-0 items-center">
           <a
             href="#inicio"
