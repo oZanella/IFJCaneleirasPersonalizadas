@@ -1,8 +1,7 @@
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import type { Product } from '@/features/landing/data/landing-content';
-import { ProductArtwork } from '@/features/landing/ui/components/product-artwork';
 import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
+import { cn } from '@/lib/utils';
 
 type ProductCardProps = {
   product: Product;
@@ -14,22 +13,31 @@ export function ProductCard({ product, index }: ProductCardProps) {
     <RevealOnScroll delay={index * 80}>
       <Card className="group h-full overflow-hidden rounded-[1.8rem] border-white/8 bg-[#f3f3f1] text-black transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(0,0,0,0.24)]">
         <CardContent className="flex h-full flex-col p-4">
-          <div className="rounded-[1.4rem] bg-white p-4">
-            <ProductArtwork
-              label={product.label}
-              accentClass={product.accentClass}
-              image={product.image}
-            />
+          <div className="relative overflow-hidden rounded-[1.4rem] bg-white">
+            {product.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={product.image}
+                alt={product.name}
+                className="h-64 w-full object-cover"
+              />
+            ) : (
+              <div
+                className={cn(
+                  'flex h-64 w-full items-center justify-center bg-linear-to-b',
+                  product.accentClass,
+                )}
+              >
+                <p className="px-6 text-center text-3xl font-black uppercase leading-none tracking-[-0.06em] text-black">
+                  {product.label}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-1 flex-col justify-between px-2 pb-2 pt-5">
             <div>
-              {product.badge ? (
-                <Badge className="border-black/10 bg-black text-white">
-                  {product.badge}
-                </Badge>
-              ) : null}
-              <h3 className="mt-4 text-xl font-semibold leading-6">
+              <h3 className="text-xl font-semibold leading-6">
                 {product.name}
               </h3>
               <p className="mt-2 text-[0.68rem] uppercase tracking-[0.28em] text-black/45">

@@ -30,11 +30,7 @@ export function ProductArtwork({
       <div className="relative z-10 flex h-full w-full items-center justify-center text-center">
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={image}
-            alt={label}
-            className="h-full w-full object-contain"
-          />
+          <img src={image} alt={label} className="h-full w-full object-cover" />
         ) : (
           <p className="text-4xl font-black uppercase leading-none tracking-[-0.08em] text-black">
             {label}

@@ -25,7 +25,7 @@ export function ProductsSection() {
             <div className="h-px flex-1 bg-linear-to-r from-zinc-500 to-transparent opacity-30" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {customProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
