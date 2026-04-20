@@ -35,7 +35,7 @@ export function ProductsSection() {
         <div>
           <div className="mb-8 flex items-center gap-4">
             <h3 className="text-xl font-bold uppercase tracking-widest text-zinc-400 sm:text-2xl">
-              Acessórios e Essentials
+              Acessórios Esportivos
             </h3>
             <div className="h-px flex-1 bg-linear-to-r from-zinc-700 to-transparent opacity-20" />
           </div>
