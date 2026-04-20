@@ -1,7 +1,7 @@
-import { products } from "@/features/landing/data/landing-content";
-import { ProductCard } from "@/features/landing/ui/components/product-card";
-import { RevealOnScroll } from "@/features/landing/ui/components/reveal-on-scroll";
-import { SectionTitle } from "@/features/landing/ui/components/section-title";
+import { products } from '@/features/landing/data/landing-content';
+import { ProductCard } from '@/features/landing/ui/components/product-card';
+import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
+import { SectionTitle } from '@/features/landing/ui/components/section-title';
 
 export function ProductsSection() {
   return (
@@ -14,10 +14,6 @@ export function ProductsSection() {
               title="Escolha o modelo ideal para personalizar"
               description="Desca a pagina e veja os produtos aparecendo aos poucos, com destaque para os valores e para o estilo de cada opcao."
             />
-            <p className="max-w-xl text-sm leading-7 text-white/58 sm:text-base">
-              Aqui voce mostra ao cliente quanto custa cada modelo e quais personalizacoes
-              ele pode pedir, sem complicar a navegacao.
-            </p>
           </div>
         </RevealOnScroll>
 

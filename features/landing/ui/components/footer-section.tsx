@@ -1,11 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { footerInfo, footerLinks } from "@/features/landing/data/landing-content";
-import { RevealOnScroll } from "@/features/landing/ui/components/reveal-on-scroll";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  footerInfo,
+  footerLinks,
+} from '@/features/landing/data/landing-content';
+import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
 
 export function FooterSection() {
   return (
-    <footer id="footer" className="border-t border-white/10 bg-black px-5 py-16 sm:px-8 lg:px-12">
+    <footer
+      id="footer"
+      className="border-t border-white/10 bg-black px-5 py-16 sm:px-8 lg:px-12"
+    >
       <div className="w-full">
         <RevealOnScroll className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/45">
@@ -15,19 +21,20 @@ export function FooterSection() {
             Envie sua ideia e peça sua caneleira personalizada.
           </h2>
           <p className="mt-5 text-sm leading-7 text-white/62 sm:text-base">
-            Se voce quer personalizar com foto, nome, numero, frase ou arte exclusiva,
-            fale direto com a loja pelo WhatsApp ou acompanhe o Instagram.
+            Se voce quer personalizar com foto, nome, numero, frase ou arte
+            exclusiva, fale direto com a loja pelo WhatsApp ou acompanhe o
+            Instagram.
           </p>
 
-          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center ">
             <a
-              href="https://wa.me/5554996655417?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20sobre%20os%20valores%20dos%20produtos%20por%20gentileza%21"
+              href="https://wa.me/5554999254677?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20sobre%20os%20valores%20dos%20produtos%20por%20gentileza%21"
               target="_blank"
               rel="noreferrer"
               className="sm:flex-1"
             >
-              <Button size="lg" className="w-full">
-                Chamar no WPP
+              <Button size="lg" className="w-full cursor-pointer">
+                Chamar no whatsApp
               </Button>
             </a>
             <a
@@ -36,7 +43,12 @@ export function FooterSection() {
               rel="noreferrer"
               className="sm:flex-1"
             >
-              <Button type="button" variant="outline" size="lg" className="w-full normal-case tracking-[0.08em]">
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                className="w-full normal-case tracking-[0.08em] cursor-pointer"
+              >
                 Instagram @ifj.caneleiras
               </Button>
             </a>
@@ -74,7 +86,8 @@ export function FooterSection() {
                     Personalizacao sob encomenda
                   </p>
                   <p className="mt-4 text-lg text-white/82">
-                    Cada pedido e pensado para ficar com a identidade que o cliente imaginou.
+                    Cada pedido e pensado para ficar com a identidade que o
+                    cliente imaginou.
                   </p>
                 </CardContent>
               </Card>
@@ -87,7 +100,8 @@ export function FooterSection() {
                     Atendimento direto
                   </p>
                   <p className="mt-4 text-lg text-white/82">
-                    Tire duvidas, envie sua referencia e combine todos os detalhes do pedido.
+                    Tire duvidas, envie sua referencia e combine todos os
+                    detalhes do pedido.
                   </p>
                 </CardContent>
               </Card>
@@ -95,12 +109,19 @@ export function FooterSection() {
           </div>
         </div>
 
-        <RevealOnScroll delay={220} className="mt-12 border-t border-white/10 pt-8">
+        <RevealOnScroll
+          delay={220}
+          className="mt-12 border-t border-white/10 pt-8"
+        >
           <div className="flex flex-col gap-6 text-sm text-white/45 lg:flex-row lg:items-center lg:justify-between">
             <p>© 2026 IFJ Caneleiras. Todos os direitos reservados.</p>
             <div className="flex flex-wrap gap-4">
               {footerLinks.map((link) => (
-                <a key={link} href="#footer" className="transition hover:text-white/75">
+                <a
+                  key={link}
+                  href="#footer"
+                  className="transition hover:text-white/75"
+                >
                   {link}
                 </a>
               ))}

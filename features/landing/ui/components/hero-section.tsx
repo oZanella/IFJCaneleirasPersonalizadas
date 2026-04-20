@@ -1,7 +1,7 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { heroHighlights } from "@/features/landing/data/landing-content";
-import { RevealOnScroll } from "@/features/landing/ui/components/reveal-on-scroll";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { heroHighlights } from '@/features/landing/data/landing-content';
+import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
 
 export function HeroSection() {
   return (
@@ -26,11 +26,11 @@ export function HeroSection() {
             Personalizadas
           </div>
           <div className="absolute bottom-[20%] left-[8%] h-[28%] w-[47%] rounded-[2rem] border border-black/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(228,228,228,0.92))] shadow-[0_30px_80px_rgba(0,0,0,0.22)]" />
-          <div className="absolute bottom-[47%] left-[15%] rotate-[-2deg] rounded-full bg-[#f0eccb] px-8 py-5 text-[clamp(1.1rem,3vw,2.8rem)] font-black uppercase tracking-[0.08em] text-zinc-900 shadow-[0_14px_35px_rgba(0,0,0,0.18)]">
+          <div className="absolute bottom-[47%] left-[15%] -rotate-2 rounded-full bg-[#f0eccb] px-8 py-5 text-[clamp(1.1rem,3vw,2.8rem)] font-black uppercase tracking-[0.08em] text-zinc-900 shadow-[0_14px_35px_rgba(0,0,0,0.18)]">
             Foto, nome ou frase
           </div>
           <div className="absolute bottom-[17%] left-[13%] h-[16%] w-[12%] rounded-[1.5rem] border border-black/8 bg-[linear-gradient(180deg,#e9ebf5,#8097d9)] shadow-[0_18px_45px_rgba(0,0,0,0.16)]" />
-          <div className="absolute bottom-[18%] left-[28%] h-[18%] w-[16%] rotate-[6deg] rounded-[1.5rem] border border-black/8 bg-[linear-gradient(180deg,#ececec,#9a9a9a)] shadow-[0_24px_55px_rgba(0,0,0,0.18)]" />
+          <div className="absolute bottom-[18%] left-[28%] h-[18%] w-[16%] rotate-6 rounded-[1.5rem] border border-black/8 bg-[linear-gradient(180deg,#ececec,#9a9a9a)] shadow-[0_24px_55px_rgba(0,0,0,0.18)]" />
           <div className="absolute bottom-[12%] right-[8%] h-[29%] w-[10%] rounded-[2rem] bg-[linear-gradient(180deg,#2a2a2a,#0f0f0f)] shadow-[0_24px_70px_rgba(0,0,0,0.35)]" />
           <div className="absolute bottom-[8%] right-[2%] h-[25%] w-[11%] rounded-[2rem] bg-[linear-gradient(180deg,#383838,#090909)] shadow-[0_24px_70px_rgba(0,0,0,0.35)]" />
 
@@ -39,12 +39,13 @@ export function HeroSection() {
               <div className="max-w-4xl">
                 <Badge>Personalize do seu jeito</Badge>
                 <h1 className="mt-5 text-4xl font-black uppercase leading-none tracking-[-0.07em] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-                  Caneleiras personalizadas com a foto, frase ou arte que voce quiser.
+                  Caneleiras personalizadas com a foto, frase ou arte que voce
+                  quiser.
                 </h1>
                 <p className="mt-6 max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
-                  Crie uma caneleira unica com foto especial, nome, numero, frase ou
-                  design exclusivo. Escolha seu modelo, veja os valores e fale conosco
-                  para fazer seu pedido sob encomenda.
+                  Crie uma caneleira única com foto especial, nome, número,
+                  frase ou design exclusivo. Escolha seu modelo, veja os valores
+                  e fale conosco para fazer seu pedido sob encomenda.
                 </p>
               </div>
 
