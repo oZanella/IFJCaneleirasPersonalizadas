@@ -18,7 +18,7 @@ export function FooterSection() {
           </p>
           <h2 className="mt-6 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-8xl">
             Sua ideia, <br className="hidden sm:block" />
-            <span className="text-white/60">nossa arte.</span>
+            <span className="text-white/60">nossa arte</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/50 sm:text-lg">
             Pronto para entrar em campo com um acessório único? Fale com nosso
@@ -34,7 +34,7 @@ export function FooterSection() {
             >
               <Button
                 size="lg"
-                className="w-full bg-white text-black hover:bg-white/90 font-bold uppercase tracking-wider"
+                className="w-full bg-white text-black hover:bg-white/90 font-bold uppercase tracking-wider cursor-pointer"
               >
                 Contato via WhatsApp
               </Button>
@@ -48,7 +48,7 @@ export function FooterSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-wider"
+                className="w-full border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-wider cursor-pointer"
               >
                 Acompanhe nosso Instagram
               </Button>
@@ -101,10 +101,10 @@ export function FooterSection() {
 
           <RevealOnScroll className="flex flex-col gap-6">
             <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/30">
-              Newsletter
+              Promoções
             </h4>
             <p className="text-sm text-white/40 italic">
-              Acompanhe lançamentos exclusivos no nosso Instagram.
+              Acompanhe diversas promoções no nosso Instagram.
             </p>
           </RevealOnScroll>
         </div>

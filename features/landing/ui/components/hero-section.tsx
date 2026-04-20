@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { heroHighlights } from '@/features/landing/data/landing-content';
 import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
 
 export function HeroSection() {
@@ -9,12 +8,6 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%)]" />
 
       <div className="relative flex min-h-[calc(100vh-89px)] w-full items-stretch">
-        <div className="hidden w-14 items-center justify-center border-r border-white/10 lg:flex">
-          <span className="[writing-mode:vertical-rl] rotate-180 text-[0.7rem] uppercase tracking-[0.45em] text-white/45">
-            Studio IFJ
-          </span>
-        </div>
-
         <div className="relative flex-1 overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.16),rgba(0,0,0,0.62)),radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.42),rgba(255,255,255,0.08)_42%,transparent_68%),linear-gradient(125deg,#d6d7de_0%,#b5b8c4_24%,#f0f1f4_44%,#c7c7cd_68%,#8f939f_100%)]" />
           <div className="absolute inset-y-0 left-[8%] w-px bg-black/10" />
@@ -39,34 +32,29 @@ export function HeroSection() {
               <div className="max-w-4xl">
                 <Badge>Personalize do seu jeito</Badge>
                 <h1 className="mt-5 text-4xl font-black uppercase leading-none tracking-[-0.07em] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-                  Caneleiras personalizadas com a foto, frase ou arte que voce
+                  Caneleiras personalizadas com a foto, frase ou arte que você
                   quiser.
                 </h1>
                 <p className="mt-6 max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
-                  Crie uma caneleira única com foto especial, nome, número,
-                  frase ou design exclusivo. Escolha seu modelo, veja os valores
-                  e fale conosco para fazer seu pedido sob encomenda.
+                  Sua caneleira, suas regras. Crie um design exclusivo com suas
+                  fotos e detalhes favoritos. Confira nossos modelos, veja os
+                  valores e faça seu pedido sob encomenda agora mesmo!
                 </p>
               </div>
 
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {heroHighlights.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[1.5rem] border border-white/10 bg-white/6 px-5 py-4 text-sm text-white/70 backdrop-blur-sm"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <a href="#produtos">
-                    <Button size="lg">Ver produtos</Button>
+                    <Button size="lg" className="cursor-pointer">
+                      Ver produtos
+                    </Button>
                   </a>
                   <a href="#footer">
-                    <Button variant="outline" size="lg">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="cursor-pointer"
+                    >
                       Pedir no WhatsApp
                     </Button>
                   </a>

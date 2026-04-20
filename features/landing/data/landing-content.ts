@@ -18,20 +18,15 @@ export const navigationItems = [
   { label: 'Contato', href: '#footer' },
 ];
 
-export const heroHighlights = [
-  'Personalize com foto, nome, número ou frase especial',
-  'Modelos criados para presentear, jogar e marcar momentos',
-  'Peça sua arte e receba atendimento direto pelo WhatsApp',
-];
-
-export const products: Product[] = [
+export const customProducts: Product[] = [
   {
     id: 'personalizada-p',
     name: 'Tamanho P',
     category: 'Caneleira personalizada',
     price: 'R$ 54,90',
     installment: 'ou 2x de R$ 29,90',
-    description: '',
+    description:
+      'Ideal para crianças ou atletas que preferem proteção compacta e leveza total.',
     label: '',
     image: '/produtos/tamanhoP/p1.png',
     accentClass: 'from-zinc-100 via-zinc-200 to-zinc-400',
@@ -42,7 +37,8 @@ export const products: Product[] = [
     category: 'Caneleira personalizada',
     price: 'R$ 59,90',
     installment: 'ou 2x de R$ 32,90',
-    description: '',
+    description:
+      'O tamanho padrão mais versátil. Perfeito para garantir proteção sem perder a mobilidade.',
     badge: 'Destaque',
     label: 'Sua foto aqui',
     image: '/produtos/tamanhoM/m1.png',
@@ -54,12 +50,16 @@ export const products: Product[] = [
     category: 'Caneleira personalizada',
     price: 'R$ 64,90',
     installment: 'ou 2x de R$ 36,90',
-    description: '',
-    badge: 'Promocao',
+    description:
+      'Proteção máxima para atletas profissionais e amadores. Área de cobertura ampliada.',
+    badge: 'Promoção',
     label: 'Frase aqui',
     image: '/produtos/tamanhoG/g1.png',
     accentClass: 'from-zinc-950 via-zinc-900 to-zinc-700',
   },
+];
+
+export const storeProducts: Product[] = [
   {
     id: 'porta',
     name: 'Porta Caneleira',
@@ -67,7 +67,7 @@ export const products: Product[] = [
     price: 'R$ 59,90',
     installment: 'ou 2x de R$ 34,90 sem juros',
     description:
-      'Esqueça fitas e esparadrapos que usava para prender e manter suas caneleiras no lugar. Acessório ideial para prender e guardar sua caneleira personalizada com mais cuidado e estilo.',
+      'Esqueça fitas e esparadrapos. Acessório ideal para prender e guardar sua caneleira com cuidado e estilo.',
     label: '',
     image: '/produtos/porta-caneleira.png',
     accentClass: 'from-neutral-950 via-neutral-800 to-neutral-700',
@@ -79,7 +79,7 @@ export const products: Product[] = [
     price: 'R$ 64,90',
     installment: '',
     description:
-      'Necessaire premium, robusta e versátil. Desenvolvida com materiais de alta durabilidade, é ideal para organizar itens de viagem ou transportar suas chuteiras com estilo.\n\nDesign sofisticado com zíper externo e tampa de fecho magnético, garantindo proteção e praticidade.\n\nMedidas:\nProfundidade: 28 cm\nAltura: 15 cm\nLargura: 16 cm',
+      'Necessaire premium, robusta e versátil. Ideal para organizar itens de viagem ou transportar chuteiras.',
     label: '',
     image: '/produtos/necessaire-lv.png',
     accentClass: 'from-zinc-100 via-white to-zinc-300',
@@ -89,9 +89,9 @@ export const products: Product[] = [
     name: 'Meia Pro Socks',
     category: 'Acessórios',
     price: 'R$ 37,90',
-    installment: 'Consultar cores e mais detalhes',
+    installment: 'Consultar cores',
     description:
-      'Aumente sua estabilidade e performance em campo. Nossa meia Pro Socks possui tecnologia antiderrapante no solado, evitando que o pé deslize dentro da chuteira e prevenindo bolhas.\n\nMaterial de alta compressão que garante ajuste perfeito e conforto durante toda a partida.\n\n',
+      'Tecnologia antiderrapante no solado, evitando deslizes dentro da chuteira e prevenindo bolhas.',
     label: '',
     image: '/produtos/meia-pro-socks.png',
     accentClass: 'from-green-100 via-white to-green-300',
@@ -101,9 +101,9 @@ export const products: Product[] = [
     name: 'Canelito (Meião Cortado)',
     category: 'Acessórios',
     price: 'R$ 34,90',
-    installment: 'Consultar cores e mais detalhes',
+    installment: 'Consultar cores',
     description:
-      'O acessório favorito dos jogadores profissionais. O Canelito oferece a compressão ideal para manter a panturrilha aquecida e a caneleira no lugar, permitindo que você use sua meia curta de performance.\n\nAcabamento premium que não desfia e mantém a elasticidade por muito mais tempo.',
+      'Oferece a compressão ideal para manter a panturrilha aquecida e a caneleira no lugar.',
     label: '',
     image: '/produtos/canelito.png',
     accentClass: 'from-blue-100 via-white to-blue-300',
