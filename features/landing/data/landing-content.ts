@@ -9,6 +9,7 @@ export type Product = {
   label: string;
   accentClass: string;
   image?: string;
+  textImage?: string;
 };
 
 export const navigationItems = [
@@ -89,7 +90,7 @@ export const storeProducts: Product[] = [
     name: 'Meia Pro Socks',
     category: 'Acessórios',
     price: 'R$ 37,90',
-    installment: 'Consultar cores',
+    installment: '',
     description:
       'Tecnologia antiderrapante no solado, evitando deslizes dentro da chuteira e prevenindo bolhas.',
     label: '',
@@ -101,7 +102,8 @@ export const storeProducts: Product[] = [
     name: 'Canelito (Meião Cortado)',
     category: 'Acessórios',
     price: 'R$ 34,90',
-    installment: 'Consultar cores',
+    installment: '',
+    textImage: 'Consultar Cores',
     description:
       'Oferece a compressão ideal para manter a panturrilha aquecida e a caneleira no lugar.',
     label: '',

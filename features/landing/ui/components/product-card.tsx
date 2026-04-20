@@ -14,6 +14,12 @@ export function ProductCard({ product, index }: ProductCardProps) {
       <Card className="group h-full overflow-hidden rounded-[1.8rem] border-white/8 bg-[#f3f3f1] text-black transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(0,0,0,0.24)]">
         <CardContent className="flex h-full flex-col p-4">
           <div className="relative overflow-hidden rounded-[1.4rem] bg-white">
+            {product.textImage && (
+              <span className="absolute left-3 top-3 z-10 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                Consulte cores
+              </span>
+            )}
+
             {product.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
