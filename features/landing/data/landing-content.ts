@@ -33,7 +33,7 @@ export const products: Product[] = [
     installment: 'ou 2x de R$ 29,90',
     description: '',
     label: '',
-    image: '/tamanhoP/p1.png',
+    image: '/produtos/tamanhoP/p1.png',
     accentClass: 'from-zinc-100 via-zinc-200 to-zinc-400',
   },
   {
@@ -45,7 +45,7 @@ export const products: Product[] = [
     description: '',
     badge: 'Destaque',
     label: 'Sua foto aqui',
-    image: '/tamanhoM/m1.png',
+    image: '/produtos/tamanhoM/m1.png',
     accentClass: 'from-zinc-100 via-zinc-300 to-zinc-500',
   },
   {
@@ -57,7 +57,7 @@ export const products: Product[] = [
     description: '',
     badge: 'Promocao',
     label: 'Frase aqui',
-    image: '/tamanhoG/g1.png',
+    image: '/produtos/tamanhoG/g1.png',
     accentClass: 'from-zinc-950 via-zinc-900 to-zinc-700',
   },
   {
@@ -68,7 +68,8 @@ export const products: Product[] = [
     installment: 'ou 2x de R$ 34,90 sem juros',
     description:
       'Esqueça fitas e esparadrapos que usava para prender e manter suas caneleiras no lugar. Acessório ideial para prender e guardar sua caneleira personalizada com mais cuidado e estilo.',
-    label: 'Porta caneleira',
+    label: '',
+    image: '/produtos/porta-caneleira.png',
     accentClass: 'from-neutral-950 via-neutral-800 to-neutral-700',
   },
   {
@@ -80,7 +81,7 @@ export const products: Product[] = [
     description:
       'Necessaire premium, robusta e versátil. Desenvolvida com materiais de alta durabilidade, é ideal para organizar itens de viagem ou transportar suas chuteiras com estilo.\n\nDesign sofisticado com zíper externo e tampa de fecho magnético, garantindo proteção e praticidade.\n\nMedidas:\nProfundidade: 28 cm\nAltura: 15 cm\nLargura: 16 cm',
     label: '',
-    image: '/necessaire-lv.png',
+    image: '/produtos/necessaire-lv.png',
     accentClass: 'from-zinc-100 via-white to-zinc-300',
   },
   {
@@ -92,7 +93,7 @@ export const products: Product[] = [
     description:
       'Aumente sua estabilidade e performance em campo. Nossa meia Pro Socks possui tecnologia antiderrapante no solado, evitando que o pé deslize dentro da chuteira e prevenindo bolhas.\n\nMaterial de alta compressão que garante ajuste perfeito e conforto durante toda a partida.\n\n',
     label: '',
-    image: '/meia-pro-socks.png',
+    image: '/produtos/meia-pro-socks.png',
     accentClass: 'from-green-100 via-white to-green-300',
   },
   {
@@ -104,25 +105,23 @@ export const products: Product[] = [
     description:
       'O acessório favorito dos jogadores profissionais. O Canelito oferece a compressão ideal para manter a panturrilha aquecida e a caneleira no lugar, permitindo que você use sua meia curta de performance.\n\nAcabamento premium que não desfia e mantém a elasticidade por muito mais tempo.',
     label: '',
-    image: '/canelito.png',
+    image: '/produtos/canelito.png',
     accentClass: 'from-blue-100 via-white to-blue-300',
   },
 ];
 
-export const aboutParagraphs = [
-  'Cada caneleira personalizada pode levar a foto de quem voce ama, uma lembranca especial, o nome do jogador, numero, frase de fe ou uma arte criada do seu jeito.',
-  'Aqui a ideia e vender mais do que um acessorio esportivo: e entregar uma peça com identidade, emocao e significado para usar no jogo, no treino ou presentear alguem.',
-];
-
 export const footerInfo = [
-  { label: 'Instagram', value: '@ifjcaneleiras' },
-  { label: 'WhatsApp', value: ' (54) 99925-4677' },
+  {
+    label: 'Instagram',
+    value: '@ifjcaneleiras',
+    href: 'https://www.instagram.com/ifjcaneleiras/',
+  },
+  {
+    label: 'WhatsApp',
+    value: ' (54) 99925-4677',
+    href: 'https://wa.me/55999254677',
+  },
   { label: 'Atendimento', value: 'Seg a sab - 9h as 18h' },
 ];
 
-export const footerLinks = [
-  'Politica de privacidade',
-  'Politica de frete',
-  'Trocas e devolucoes',
-  'Informacoes de contato',
-];
+export const footerLinks = ['Desenvolvido por Henrique Zanella'];

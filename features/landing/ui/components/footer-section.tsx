@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   footerInfo,
   footerLinks,
@@ -10,31 +9,34 @@ export function FooterSection() {
   return (
     <footer
       id="footer"
-      className="border-t border-white/10 bg-black px-5 py-16 sm:px-8 lg:px-12"
+      className="border-t border-white/5 bg-black px-6 py-20 sm:px-10 lg:px-16"
     >
       <div className="w-full">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/45">
-            Faca seu pedido
+        <RevealOnScroll className="mx-auto max-w-4xl text-center">
+          <p className="text-[0.65rem] font-bold uppercase tracking-[0.4em] text-white/40">
+            Design Exclusivo
           </p>
-          <h2 className="mt-5 text-4xl font-black uppercase tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-            Envie sua ideia e peça sua caneleira personalizada.
+          <h2 className="mt-6 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-8xl">
+            Sua ideia, <br className="hidden sm:block" />
+            <span className="text-white/60">nossa arte.</span>
           </h2>
-          <p className="mt-5 text-sm leading-7 text-white/62 sm:text-base">
-            Se voce quer personalizar com foto, nome, numero, frase ou arte
-            exclusiva, fale direto com a loja pelo WhatsApp ou acompanhe o
-            Instagram.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/50 sm:text-lg">
+            Pronto para entrar em campo com um acessório único? Fale com nosso
+            time de criação e personalize cada detalhe da sua armadura.
           </p>
 
-          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center ">
+          <div className="mx-auto mt-10 flex max-w-md flex-col gap-4 sm:flex-row sm:justify-center">
             <a
-              href="https://wa.me/5554999254677?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20sobre%20os%20valores%20dos%20produtos%20por%20gentileza%21"
+              href="https://wa.me/5554999254677?text=Ol%C3%A1%2C%20gostaria%20de%20personalizar%20meu%20equipamento%21"
               target="_blank"
               rel="noreferrer"
               className="sm:flex-1"
             >
-              <Button size="lg" className="w-full cursor-pointer">
-                Chamar no whatsApp
+              <Button
+                size="lg"
+                className="w-full bg-white text-black hover:bg-white/90 font-bold uppercase tracking-wider"
+              >
+                Contato via WhatsApp
               </Button>
             </a>
             <a
@@ -44,83 +46,83 @@ export function FooterSection() {
               className="sm:flex-1"
             >
               <Button
-                type="button"
                 variant="outline"
                 size="lg"
-                className="w-full normal-case tracking-[0.08em] cursor-pointer"
+                className="w-full border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-wider"
               >
-                Instagram @ifj.caneleiras
+                Acompanhe nosso Instagram
               </Button>
             </a>
           </div>
         </RevealOnScroll>
 
-        <div className="mt-16 grid gap-6 border-t border-white/10 pt-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <RevealOnScroll>
-            <div>
-              <span className="block text-[2rem] font-black uppercase tracking-[0.42em] text-white">
-                IFJ
-              </span>
-              <span className="mt-1 block text-[0.72rem] uppercase tracking-[0.34em] text-white/45">
-                Caneleiras personalizadas
-              </span>
-
-              <div className="mt-8 space-y-4">
-                {footerInfo.map((item) => (
-                  <p key={item.label} className="text-sm text-white/68">
-                    <span className="mr-3 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-white/38">
-                      {item.label}
-                    </span>
-                    {item.value}
-                  </p>
-                ))}
+        <div className="mt-24 grid gap-12 border-t border-white/10 pt-16 sm:grid-cols-2 lg:grid-cols-4">
+          <RevealOnScroll className="lg:col-span-1">
+            <div className="space-y-6">
+              <div>
+                <span className="block text-[2.5rem] font-black leading-none tracking-tighter text-white">
+                  IFJ
+                </span>
+                <span className="mt-2 block text-xs uppercase tracking-[0.3em] text-white/30">
+                  Caneleiras personalizadas
+                </span>
               </div>
+              <p className="text-sm leading-relaxed text-white/40 max-w-xs">
+                Especialistas em caneleiras personalizadas de alta resistência e
+                meias de performance para atletas.
+              </p>
             </div>
           </RevealOnScroll>
 
-          <div className="grid gap-5 sm:grid-cols-2">
-            <RevealOnScroll delay={100}>
-              <Card className="bg-white/3">
-                <CardContent>
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-white/38">
-                    Personalizacao sob encomenda
-                  </p>
-                  <p className="mt-4 text-lg text-white/82">
-                    Cada pedido e pensado para ficar com a identidade que o
-                    cliente imaginou.
-                  </p>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
+          <RevealOnScroll className="flex flex-col gap-6">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/30">
+              Contato
+            </h4>
+            <div className="space-y-4">
+              {footerInfo.map((item) => (
+                <div key={item.label} className="group">
+                  <span className="block text-[0.6rem] font-bold uppercase tracking-widest text-white/20 group-hover:text-white/40 transition-colors ">
+                    {item.label}
+                  </span>
+                  <span className="text-sm font-medium text-white/70">
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
 
-            <RevealOnScroll delay={180}>
-              <Card className="bg-white/3">
-                <CardContent>
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-white/38">
-                    Atendimento direto
-                  </p>
-                  <p className="mt-4 text-lg text-white/82">
-                    Tire duvidas, envie sua referencia e combine todos os
-                    detalhes do pedido.
-                  </p>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-          </div>
+          <RevealOnScroll className="flex flex-col gap-6">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/30">
+              Localização
+            </h4>
+            <p className="text-sm text-white/70">Caxias do Sul - RS</p>
+          </RevealOnScroll>
+
+          <RevealOnScroll className="flex flex-col gap-6">
+            <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/30">
+              Newsletter
+            </h4>
+            <p className="text-sm text-white/40 italic">
+              Acompanhe lançamentos exclusivos no nosso Instagram.
+            </p>
+          </RevealOnScroll>
         </div>
 
         <RevealOnScroll
-          delay={220}
-          className="mt-12 border-t border-white/10 pt-8"
+          delay={200}
+          className="mt-20 border-t border-white/5 pt-10"
         >
-          <div className="flex flex-col gap-6 text-sm text-white/45 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-8 text-[0.7rem] uppercase tracking-widest text-white/30 lg:flex-row lg:items-center lg:justify-between">
             <p>© 2026 IFJ Caneleiras. Todos os direitos reservados.</p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-x-12 gap-y-4">
               {footerLinks.map((link) => (
                 <a
                   key={link}
-                  href="#footer"
-                  className="transition hover:text-white/75"
+                  href="https://www.instagram.com/zanella_03"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition hover:text-white"
                 >
                   {link}
                 </a>

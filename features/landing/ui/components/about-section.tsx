@@ -1,7 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { aboutParagraphs } from "@/features/landing/data/landing-content";
-import { RevealOnScroll } from "@/features/landing/ui/components/reveal-on-scroll";
-import { SectionTitle } from "@/features/landing/ui/components/section-title";
+import { RevealOnScroll } from '@/features/landing/ui/components/reveal-on-scroll';
+import { SectionTitle } from '@/features/landing/ui/components/section-title';
 
 export function AboutSection() {
   return (
@@ -10,22 +8,12 @@ export function AboutSection() {
         <RevealOnScroll>
           <SectionTitle
             eyebrow="Sobre a marca"
-            title="Personalizacao que transforma a caneleira em algo unico"
-            description="A proposta da loja e permitir que cada cliente tenha uma peça feita com a propria historia, imagem ou mensagem especial."
+            title="Personalização que transforma a caneleira em algo único"
+            description="A proposta da loja é permitir que cada cliente tenha uma peça feita com a própria história, imagem ou mensagem especial."
           />
         </RevealOnScroll>
 
-        <div className="grid gap-5">
-          {aboutParagraphs.map((paragraph, index) => (
-            <RevealOnScroll key={paragraph} delay={index * 120}>
-              <Card className="bg-[#0e0e0e]">
-                <CardContent>
-                  <p className="text-base leading-8 text-white/64">{paragraph}</p>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-          ))}
-        </div>
+        <div className="grid gap-5"></div>
       </div>
     </section>
   );
