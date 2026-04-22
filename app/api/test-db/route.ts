@@ -11,7 +11,12 @@ export async function GET() {
       message: 'Conectado ao banco de dados com sucesso!',
       data: result,
       env_check: {
-        has_url: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL),
+        has_url: !!(
+          process.env.DATABASE_URL ||
+          process.env.IFJ_DATABASE_URL ||
+          process.env.POSTGRES_URL ||
+          process.env.IFJ_POSTGRES_URL
+        ),
         node_env: process.env.NODE_ENV,
         available_keys: Object.keys(process.env).filter(
           (key) =>
@@ -31,7 +36,12 @@ export async function GET() {
         error: error.message,
         stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
         env_check: {
-          has_url: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL),
+          has_url: !!(
+            process.env.DATABASE_URL ||
+            process.env.IFJ_DATABASE_URL ||
+            process.env.POSTGRES_URL ||
+            process.env.IFJ_POSTGRES_URL
+          ),
           node_env: process.env.NODE_ENV,
           available_keys: Object.keys(process.env).filter(
             (key) =>
