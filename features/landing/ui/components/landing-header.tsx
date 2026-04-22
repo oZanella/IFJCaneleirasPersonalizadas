@@ -68,11 +68,6 @@ export function LandingHeader({ isAdmin }: LandingHeaderProps) {
         </nav>
 
         <div className="ml-auto hidden items-center gap-3 lg:flex">
-          <a href="#produtos">
-            <Button variant="outline" size="sm" className="cursor-pointer">
-              Catálogo
-            </Button>
-          </a>
           <AdminSessionControls initialIsAdmin={isAdmin} />
         </div>
 
