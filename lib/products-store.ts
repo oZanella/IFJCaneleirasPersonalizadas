@@ -114,6 +114,10 @@ export async function getProducts() {
     const rows =
       (await sql`SELECT * FROM ifj.products ORDER BY created_at DESC`) as ProductRow[];
 
+    if (!rows || rows.length === 0) {
+      console.warn('⚠️ Nenhum produto encontrado na tabela ifj.products.');
+    }
+
     return {
       customProducts: sortProducts(
         rows.filter((r) => r.section === 'customProducts').map(mapRowToProduct),
@@ -123,7 +127,7 @@ export async function getProducts() {
       ),
     };
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('❌ Falha ao buscar produtos no banco:', error);
     return emptyCollection;
   }
 }
