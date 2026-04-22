@@ -12,7 +12,7 @@ export function ProductsSection() {
             <SectionTitle
               eyebrow="Catálogo"
               title="Equipamentos de Alta Performance"
-              description="Cada detalhe importa. Comece pelas suas caneleiras."
+              description="O cuidado com cada detalhe é o que define o resultado. Comece pelas suas caneleiras."
             />
           </div>
         </RevealOnScroll>
