@@ -36,10 +36,10 @@ export function ProductCard({ product, index }: ProductCardProps) {
               <img
                 src={product.image}
                 alt={product.name}
-                className="h-64 w-full object-cover"
+                className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             ) : (
-              <div className="flex h-64 w-full items-center justify-center bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-500">
+              <div className="flex h-80 w-full items-center justify-center bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-500">
                 <p className="px-6 text-center text-3xl font-black uppercase leading-none tracking-[-0.06em] text-black">
                   {product.name}
                 </p>

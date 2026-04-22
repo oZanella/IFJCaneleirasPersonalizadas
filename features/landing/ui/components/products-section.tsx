@@ -33,7 +33,7 @@ export function ProductsSection({ products, isAdmin }: ProductsSectionProps) {
             <div className="h-px flex-1 bg-linear-to-r from-zinc-500 to-transparent opacity-30" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {products.customProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
@@ -48,7 +48,7 @@ export function ProductsSection({ products, isAdmin }: ProductsSectionProps) {
             <div className="h-px flex-1 bg-linear-to-r from-zinc-700 to-transparent opacity-20" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {products.storeProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
