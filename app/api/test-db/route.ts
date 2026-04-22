@@ -27,13 +27,15 @@ export async function GET() {
         ),
       },
       db_inspect: {
-        schema_exists: (
+        all_schemas:
+          await sql`SELECT schema_name FROM information_schema.schemata`,
+        ifj_schema_exists: (
           await sql`SELECT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'ifj')`
         )[0]?.exists,
         tables: await sql`
-          SELECT table_name 
+          SELECT table_schema, table_name 
           FROM information_schema.tables 
-          WHERE table_schema = 'ifj'
+          WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
         `,
       },
     });
