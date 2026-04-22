@@ -1,18 +1,12 @@
-import "server-only";
-
-import { promises as fs } from "node:fs";
-import path from "node:path";
-
-import { unstable_noStore as noStore } from "next/cache";
+import { sql } from '@/lib/db';
+import { unstable_noStore as noStore } from 'next/cache';
 
 import type {
   Product,
   ProductCollection,
   ProductInput,
   ProductSection,
-} from "@/features/landing/data/landing-content";
-
-const productsFilePath = path.join(process.cwd(), "data", "products.json");
+} from '@/features/landing/data/landing-content';
 
 const emptyCollection: ProductCollection = {
   customProducts: [],
@@ -25,48 +19,81 @@ function isPriorityProduct(product: Product) {
 
 function sortProducts(products: Product[]) {
   const priorityProducts = products.filter(isPriorityProduct);
-  const regularProducts = products.filter((product) => !isPriorityProduct(product));
+  const regularProducts = products.filter(
+    (product) => !isPriorityProduct(product),
+  );
 
   return [...priorityProducts, ...regularProducts];
 }
 
+function mapRowToProduct(row: ProductRow): Product {
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category || undefined,
+    price: Number(row.price),
+    installment: row.installment || undefined,
+    description: row.description,
+    highlight: row.highlight || undefined,
+    image: row.image || undefined,
+    textImage: row.text_image || undefined,
+  };
+}
+
+type ProductRow = {
+  id: string;
+  name: string;
+  category: string | null;
+  price: string | number;
+  installment: string | null;
+  description: string;
+  highlight: string | null;
+  image: string | null;
+  text_image: string | null;
+  section: string;
+};
+
 function slugify(value: string) {
   return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
     .slice(0, 60);
 }
 
 function parsePrice(value: number | string) {
-  if (typeof value === "number") {
+  if (typeof value === 'number') {
     return value;
   }
 
-  const normalized = value.replace(/[^\d.,]/g, "").replace(".", "").replace(",", ".");
+  const normalized = value
+    .replace(/[^\d.,]/g, '')
+    .replace('.', '')
+    .replace(',', '.');
   const parsed = Number(normalized);
 
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function ensureUniqueId(baseName: string, data: ProductCollection, ignoreId?: string) {
+async function ensureUniqueId(baseName: string, ignoreId?: string) {
   const baseId = slugify(baseName) || crypto.randomUUID();
-  const existingIds = new Set(
-    [...data.customProducts, ...data.storeProducts]
-      .filter((product) => product.id !== ignoreId)
-      .map((product) => product.id),
-  );
 
-  if (!existingIds.has(baseId)) {
+  const existing =
+    await sql`SELECT id FROM ifj.products WHERE id = ${baseId} ${ignoreId ? sql`AND id != ${ignoreId}` : sql``}`;
+
+  if (existing.length === 0) {
     return baseId;
   }
 
   let suffix = 2;
   let candidate = `${baseId}-${suffix}`;
 
-  while (existingIds.has(candidate)) {
+  while (true) {
+    const check =
+      await sql`SELECT id FROM ifj.products WHERE id = ${candidate}`;
+    if (check.length === 0) break;
     suffix += 1;
     candidate = `${baseId}-${suffix}`;
   }
@@ -74,159 +101,104 @@ function ensureUniqueId(baseName: string, data: ProductCollection, ignoreId?: st
   return candidate;
 }
 
-function normalizeProduct(
-  input: ProductInput,
-  data: ProductCollection,
-  fallbackId?: string,
-): Product {
-  const name = input.name.trim();
-
-  if (!name) {
-    throw new Error("Informe o nome do produto.");
-  }
-
-  const price = parsePrice(input.price);
-
-  if (!price || price < 0) {
-    throw new Error("Informe um preço válido.");
-  }
-
-  const id = ensureUniqueId(name, data, fallbackId);
-
-  return {
-    id,
-    name,
-    category: input.category?.trim() || undefined,
-    price,
-    installment: input.installment?.trim() || undefined,
-    description: input.description.trim(),
-    highlight: input.highlight?.trim() || undefined,
-    image: input.image?.trim() || undefined,
-    textImage: input.textImage?.trim() || undefined,
-  };
-}
-
-function normalizeLoadedProduct(product: ProductInput & { id: string }): Product {
-  return {
-    id: product.id,
-    name: product.name,
-    category: product.category?.trim() || undefined,
-    price: parsePrice(product.price),
-    installment: product.installment?.trim() || undefined,
-    description: product.description,
-    highlight:
-      ("highlight" in product ? product.highlight : undefined) ||
-      ("badge" in product ? (product as ProductInput & { badge?: string }).badge : undefined),
-    image: product.image?.trim() || undefined,
-    textImage: product.textImage?.trim() || undefined,
-  };
-}
-
-async function writeProducts(data: ProductCollection) {
-  await fs.writeFile(
-    productsFilePath,
-    JSON.stringify(
-      {
-        customProducts: sortProducts(data.customProducts),
-        storeProducts: sortProducts(data.storeProducts),
-      },
-      null,
-      2,
-    ),
-  );
-}
-
 export async function getProducts() {
   noStore();
 
   try {
-    const file = await fs.readFile(productsFilePath, "utf-8");
-    const parsed = JSON.parse(file) as {
-      customProducts?: Array<ProductInput & { id: string }>;
-      storeProducts?: Array<ProductInput & { id: string }>;
-    };
+    const rows =
+      (await sql`SELECT * FROM ifj.products ORDER BY created_at DESC`) as ProductRow[];
 
     return {
-      customProducts: sortProducts((parsed.customProducts ?? []).map(normalizeLoadedProduct)),
-      storeProducts: sortProducts((parsed.storeProducts ?? []).map(normalizeLoadedProduct)),
+      customProducts: sortProducts(
+        rows.filter((r) => r.section === 'customProducts').map(mapRowToProduct),
+      ),
+      storeProducts: sortProducts(
+        rows.filter((r) => r.section === 'storeProducts').map(mapRowToProduct),
+      ),
     };
-  } catch {
+  } catch (error) {
+    console.error('Error fetching products:', error);
     return emptyCollection;
   }
 }
 
-export async function createProduct(section: ProductSection, input: ProductInput) {
-  const data = await getProducts();
-  const product = normalizeProduct(input, data);
+export async function createProduct(
+  section: ProductSection,
+  input: ProductInput,
+) {
+  const name = input.name.trim();
+  if (!name) throw new Error('Informe o nome do produto.');
 
-  if (isPriorityProduct(product)) {
-    data[section].unshift(product);
-  } else {
-    data[section].push(product);
-  }
-  await writeProducts(data);
+  const price = parsePrice(input.price);
+  if (!price || price < 0) throw new Error('Informe um preço válido.');
 
-  return product;
+  const id = await ensureUniqueId(name);
+
+  await sql`
+    INSERT INTO ifj.products (
+      id, name, category, price, installment, description, highlight, image, text_image, section
+    ) VALUES (
+      ${id}, ${name}, ${input.category || null}, ${price}, ${input.installment || null}, 
+      ${input.description}, ${input.highlight || null}, ${input.image || null}, 
+      ${input.textImage || null}, ${section}
+    )
+  `;
+
+  return {
+    id,
+    name,
+    category: input.category,
+    price,
+    installment: input.installment,
+    description: input.description,
+    highlight: input.highlight,
+    image: input.image,
+    textImage: input.textImage,
+  };
 }
 
-export async function updateProduct(id: string, section: ProductSection, input: ProductInput) {
-  const data = await getProducts();
-  const currentSections: ProductSection[] = ["customProducts", "storeProducts"];
-  let currentSection: ProductSection | null = null;
-  let currentProduct: Product | null = null;
+export async function updateProduct(
+  id: string,
+  section: ProductSection,
+  input: ProductInput,
+) {
+  const name = input.name.trim();
+  if (!name) throw new Error('Informe o nome do produto.');
 
-  for (const sectionName of currentSections) {
-    const found = data[sectionName].find((product) => product.id === id);
+  const price = parsePrice(input.price);
+  if (!price || price < 0) throw new Error('Informe um preço válido.');
 
-    if (found) {
-      currentSection = sectionName;
-      currentProduct = found;
-      break;
-    }
-  }
+  const newId = await ensureUniqueId(name, id);
 
-  if (!currentProduct || !currentSection) {
-    throw new Error("Produto não encontrado.");
-  }
+  await sql`
+    UPDATE ifj.products SET
+      id = ${newId},
+      name = ${name},
+      category = ${input.category || null},
+      price = ${price},
+      installment = ${input.installment || null},
+      description = ${input.description},
+      highlight = ${input.highlight || null},
+      image = ${input.image || null},
+      text_image = ${input.textImage || null},
+      section = ${section},
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = ${id}
+  `;
 
-  const updatedProduct = normalizeProduct({ ...currentProduct, ...input, id }, data, id);
-
-  data[currentSection] = data[currentSection].filter((product) => product.id !== id);
-  if (isPriorityProduct(updatedProduct)) {
-    data[section].unshift(updatedProduct);
-  } else {
-    data[section].push(updatedProduct);
-  }
-  await writeProducts(data);
-
-  return updatedProduct;
+  return {
+    id: newId,
+    name,
+    category: input.category,
+    price,
+    installment: input.installment,
+    description: input.description,
+    highlight: input.highlight,
+    image: input.image,
+    textImage: input.textImage,
+  };
 }
 
 export async function deleteProduct(id: string) {
-  const data = await getProducts();
-  let removed = false;
-
-  data.customProducts = data.customProducts.filter((product) => {
-    if (product.id === id) {
-      removed = true;
-      return false;
-    }
-
-    return true;
-  });
-
-  data.storeProducts = data.storeProducts.filter((product) => {
-    if (product.id === id) {
-      removed = true;
-      return false;
-    }
-
-    return true;
-  });
-
-  if (!removed) {
-    throw new Error("Produto não encontrado.");
-  }
-
-  await writeProducts(data);
+  await sql`DELETE FROM ifj.products WHERE id = ${id}`;
 }

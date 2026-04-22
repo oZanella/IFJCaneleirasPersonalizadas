@@ -1,27 +1,25 @@
-import "server-only";
+import 'server-only';
 
-import { cookies } from "next/headers";
-import { createHash, timingSafeEqual } from "node:crypto";
+import { cookies } from 'next/headers';
+import { createHash, timingSafeEqual } from 'node:crypto';
 
-const ADMIN_COOKIE_NAME = "ifj-admin-session";
+import { sql } from '@/lib/db';
 
-const ADMIN_USERS = [
-  {
-    email: "ifjcaneleiraspersonalizadas@gmail.com",
-    password: "Caneleiras2604IFJ",
-  },
-  {
-    email: "masterzanella@gmail.com",
-    password: "master1234!",
-  },
-] as const;
+type Admin = {
+  email: string;
+  password: string;
+};
+
+const ADMIN_COOKIE_NAME = 'ifj-admin-session';
 
 function getAdminSecret() {
-  return process.env.ADMIN_SESSION_SECRET ?? "ifj-local-secret";
+  return process.env.ADMIN_SESSION_SECRET ?? 'ifj-local-secret';
 }
 
 function createSessionToken(email: string, password: string, secret: string) {
-  return createHash("sha256").update(`${email}:${password}:${secret}`).digest("hex");
+  return createHash('sha256')
+    .update(`${email}:${password}:${secret}`)
+    .digest('hex');
 }
 
 function safeEqual(a: string, b: string) {
@@ -44,30 +42,35 @@ export async function isAdminAuthenticated() {
   }
 
   const secret = getAdminSecret();
+  const admins =
+    (await sql`SELECT email, password FROM ifj.admin_users`) as Admin[];
 
-  return ADMIN_USERS.some((adminUser) =>
-    safeEqual(token, createSessionToken(adminUser.email, adminUser.password, secret)),
+  return admins.some((admin) =>
+    safeEqual(token, createSessionToken(admin.email, admin.password, secret)),
   );
 }
 
 export async function loginAdmin(email: string, password: string) {
-  const matchedUser = ADMIN_USERS.find(
-    (adminUser) =>
-      safeEqual(email, adminUser.email) && safeEqual(password, adminUser.password),
-  );
+  const admins =
+    (await sql`SELECT email, password FROM ifj.admin_users WHERE email = ${email} AND password = ${password}`) as Admin[];
+  const matchedUser = admins[0];
 
   if (!matchedUser) {
     return false;
   }
 
   const cookieStore = await cookies();
-  const token = createSessionToken(matchedUser.email, matchedUser.password, getAdminSecret());
+  const token = createSessionToken(
+    matchedUser.email,
+    matchedUser.password,
+    getAdminSecret(),
+  );
 
   cookieStore.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
     maxAge: 60 * 60 * 12,
   });
 
