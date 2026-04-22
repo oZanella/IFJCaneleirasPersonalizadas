@@ -26,6 +26,16 @@ export async function GET() {
             key.includes('DB'),
         ),
       },
+      db_inspect: {
+        schema_exists: (
+          await sql`SELECT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'ifj')`
+        )[0]?.exists,
+        tables: await sql`
+          SELECT table_name 
+          FROM information_schema.tables 
+          WHERE table_schema = 'ifj'
+        `,
+      },
     });
   } catch (error: any) {
     console.error('❌ Erro no teste de banco de dados:', error);
