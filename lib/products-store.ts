@@ -81,7 +81,10 @@ async function ensureUniqueId(baseName: string, ignoreId?: string) {
   const baseId = slugify(baseName) || crypto.randomUUID();
 
   const existing =
-    await sql`SELECT id FROM ifj.products WHERE id = ${baseId} ${ignoreId ? sql`AND id != ${ignoreId}` : sql``}`;
+    (await sql`SELECT id FROM ifj.products WHERE id = ${baseId} ${ignoreId ? sql`AND id != ${ignoreId}` : sql``}`) as Record<
+      string,
+      unknown
+    >[];
 
   if (existing.length === 0) {
     return baseId;
@@ -92,7 +95,10 @@ async function ensureUniqueId(baseName: string, ignoreId?: string) {
 
   while (true) {
     const check =
-      await sql`SELECT id FROM ifj.products WHERE id = ${candidate}`;
+      (await sql`SELECT id FROM ifj.products WHERE id = ${candidate}`) as Record<
+        string,
+        unknown
+      >[];
     if (check.length === 0) break;
     suffix += 1;
     candidate = `${baseId}-${suffix}`;
