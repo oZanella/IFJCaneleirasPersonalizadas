@@ -1,4 +1,4 @@
-import { sql } from '@/lib/db';
+import { sql, fragment } from '@/lib/db';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import type {
@@ -81,7 +81,7 @@ async function ensureUniqueId(baseName: string, ignoreId?: string) {
   const baseId = slugify(baseName) || crypto.randomUUID();
 
   const existing =
-    (await sql`SELECT id FROM ifj.products WHERE id = ${baseId} ${ignoreId ? sql`AND id != ${ignoreId}` : sql``}`) as Record<
+    (await sql`SELECT id FROM ifj.products WHERE id = ${baseId} ${ignoreId ? fragment`AND id != ${ignoreId}` : fragment``}`) as Record<
       string,
       unknown
     >[];
