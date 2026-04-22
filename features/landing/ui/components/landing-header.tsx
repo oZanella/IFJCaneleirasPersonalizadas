@@ -1,14 +1,45 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { AdminSessionControls } from '@/features/landing/ui/components/admin-session-controls';
 import { navigationItems } from '@/features/landing/data/landing-content';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function LandingHeader() {
+type LandingHeaderProps = {
+  isAdmin: boolean;
+};
+
+export function LandingHeader({ isAdmin }: LandingHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  useEffect(() => {
+    if (!toastMessage) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setToastMessage('');
+    }, 4000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toastMessage]);
+
+  function handleMobileLoginSuccess() {
+    setIsMenuOpen(false);
+    setToastMessage('Login realizado com sucesso.');
+    window.location.hash = 'inicio';
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/80 backdrop-blur-md">
+      {toastMessage ? (
+        <div className="fixed bottom-5 left-1/2 z-[80] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl border border-emerald-300/20 bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-black shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+          {toastMessage}
+        </div>
+      ) : null}
+
       <div className="mx-auto flex w-full items-center px-6 py-5 lg:px-12">
         <div className="flex shrink-0 items-center">
           <a
@@ -36,6 +67,15 @@ export function LandingHeader() {
           ))}
         </nav>
 
+        <div className="ml-auto hidden items-center gap-3 lg:flex">
+          <a href="#produtos">
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              Catálogo
+            </Button>
+          </a>
+          <AdminSessionControls initialIsAdmin={isAdmin} />
+        </div>
+
         <div className="ml-auto lg:hidden">
           <button
             className="text-white"
@@ -59,6 +99,13 @@ export function LandingHeader() {
                 {item.label}
               </a>
             ))}
+            <div className="pt-4">
+              <AdminSessionControls
+                initialIsAdmin={isAdmin}
+                mobile
+                onLoginSuccess={handleMobileLoginSuccess}
+              />
+            </div>
           </nav>
         </div>
       )}

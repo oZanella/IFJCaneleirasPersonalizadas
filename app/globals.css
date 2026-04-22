@@ -122,6 +122,10 @@ a {
 }
 
 @layer utilities {
+  .admin-input {
+    @apply w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-white/30;
+  }
+
   .surface-card {
     @apply rounded-4xl border border-border/70 bg-card/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)];
   }

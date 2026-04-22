@@ -9,7 +9,7 @@ export function AboutSection() {
           <SectionTitle
             eyebrow="Sobre a marca"
             title="Personalização que transforma a caneleira em algo único"
-            description="A proposta da loja é permitir que cada cliente tenha uma peça feita com a própria história, imagem ou mensagem especial."
+            description="A proposta da loja é permitir que cada cliente tenha uma peça feita com a própria história, foto ou mensagem especial."
           />
         </RevealOnScroll>
 
