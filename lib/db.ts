@@ -10,6 +10,7 @@ function getPool() {
   }
 
   const connectionString =
+    process.env.DATABASE_URL_FORCE ||
     process.env.DATABASE_URL ||
     process.env.IFJ_DATABASE_URL ||
     process.env.POSTGRES_URL ||
