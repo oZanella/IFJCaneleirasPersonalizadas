@@ -12,12 +12,22 @@ function getPool() {
   const connectionString =
     process.env.DATABASE_URL ||
     process.env.POSTGRES_URL ||
-    process.env.POSTGRES_URL_NON_POOLING;
+    process.env.POSTGRES_PRISMA_URL ||
+    process.env.POSTGRES_URL_NON_POOLING ||
+    process.env.POSTGRES_URL_NO_SSL;
 
   if (!connectionString) {
-    // Only throw if we are not in build time or if we actually need it
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('DATABASE_URL is not defined in production!');
+      console.error(
+        '❌ [DB] DATABASE_URL is not defined! Available environment variables keys:',
+        Object.keys(process.env).filter(
+          (k) =>
+            k.includes('DB') || k.includes('POSTGRES') || k.includes('URL'),
+        ),
+      );
+      throw new Error(
+        'DATABASE_URL is not defined in production! Please check your Vercel environment variables.',
+      );
     }
     return null;
   }
@@ -37,10 +47,6 @@ function getPool() {
   return pool;
 }
 
-/**
- * Tagged template helper to maintain compatibility with existing queries.
- * Converts `sql`SELECT... WHERE id = ${id}`` to `pool.query('SELECT... WHERE id = $1', [id])`
- */
 interface SqlFragment {
   strings: TemplateStringsArray;
   values: unknown[];
@@ -87,7 +93,6 @@ function buildQuery(
   return { query, params };
 }
 
-// Add a helper for nested fragments (used like sql`fragment`)
 const sqlHelper = sql as typeof sql & {
   fragment: (
     strings: TemplateStringsArray,
@@ -98,7 +103,6 @@ sqlHelper.fragment = (strings: TemplateStringsArray, ...values: unknown[]) => {
   return { strings, values, __isFragment: true };
 };
 
-// Also export as a function property if needed for better typing
 export function fragment(
   strings: TemplateStringsArray,
   ...values: unknown[]

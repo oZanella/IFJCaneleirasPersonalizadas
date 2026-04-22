@@ -13,6 +13,13 @@ export async function GET() {
       env_check: {
         has_url: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL),
         node_env: process.env.NODE_ENV,
+        available_keys: Object.keys(process.env).filter(
+          (key) =>
+            key.includes('POSTGRES') ||
+            key.includes('DATABASE') ||
+            key.includes('URL') ||
+            key.includes('DB'),
+        ),
       },
     });
   } catch (error: any) {
@@ -26,6 +33,13 @@ export async function GET() {
         env_check: {
           has_url: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL),
           node_env: process.env.NODE_ENV,
+          available_keys: Object.keys(process.env).filter(
+            (key) =>
+              key.includes('POSTGRES') ||
+              key.includes('DATABASE') ||
+              key.includes('URL') ||
+              key.includes('DB'),
+          ),
         },
       },
       { status: 500 },
