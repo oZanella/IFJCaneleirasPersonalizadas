@@ -146,6 +146,56 @@ a {
     @apply w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-white/30;
   }
 
+  /* Revised Admin UI Utilities - Optimized for Centering */
+  .admin-input-revised {
+    @apply flex h-11 w-full items-center rounded-[1.1rem] border border-emerald-500/20 bg-white/3 px-4 text-sm text-white/90 outline-none transition-all duration-300 placeholder:text-white/20 focus:border-emerald-400 focus:bg-white/6 focus:ring-4 focus:ring-emerald-400/10;
+  }
+
+  .admin-input-group {
+    @apply flex h-11 w-full items-center gap-2.5 rounded-[1.1rem] border border-emerald-500/20 bg-white/3 px-4 shadow-inner transition-all duration-300 focus-within:border-emerald-400 focus-within:bg-white/6 focus-within:ring-4 focus-within:ring-emerald-400/10;
+  }
+
+  /* Universal alignment fix (the "2px down" request) */
+  .admin-input-revised,
+  .admin-input-group,
+  .admin-input-revised span,
+  .admin-input-revised input,
+  .admin-input-group span,
+  .admin-input-group input {
+    @apply items-center leading-none;
+  }
+
+  .admin-input-group input {
+    @apply h-full border-none bg-transparent p-0 outline-none ring-0;
+  }
+
+  .admin-input-revised span,
+  .admin-input-revised input,
+  .admin-input-group span,
+  .admin-input-group input {
+    @apply relative top-[1.5px];
+  }
+
+  .admin-button-secondary {
+    @apply flex items-center justify-center rounded-[1.2rem] border border-emerald-500/20 bg-white/5 px-5 py-3 text-[0.65rem] font-black uppercase tracking-[0.2em] text-white/50 transition-all duration-300 hover:bg-white/10 hover:text-white active:scale-[0.98] disabled:opacity-50;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-white/10;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+
   .surface-card {
     @apply rounded-4xl border border-border/70 bg-card/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)];
   }

@@ -1,6 +1,7 @@
 import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { isAdminAuthenticated } from '@/lib/admin-auth';
@@ -37,10 +38,32 @@ export async function POST(request: Request) {
 
     const fileName = sanitizeFileName(file.name);
 
-    // Upload a imagem para o Vercel Blob em vez do sistema local
+    // Híbrido: Se for desenvolvimento, salva local. Se for produção, usa Vercel Blob.
+    if (process.env.NODE_ENV === 'development') {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      const publicDir = path.join(process.cwd(), 'public', 'uploads');
+
+      // Garantir que a pasta de uploads existe localmente
+      try {
+        await fs.access(publicDir);
+      } catch {
+        await fs.mkdir(publicDir, { recursive: true });
+      }
+
+      const filePath = path.join(publicDir, fileName);
+      await fs.writeFile(filePath, buffer);
+
+      return NextResponse.json({
+        imagePath: `/uploads/${fileName}`,
+      });
+    }
+
+    // Produção: Upload para o Vercel Blob
     const blob = await put(fileName, file, {
       access: 'public',
-      addRandomSuffix: true, // Garante que não haverá colisão de nomes
+      addRandomSuffix: true,
     });
 
     revalidatePath('/');
@@ -50,8 +73,20 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error('❌ Erro no upload para o Vercel Blob:', error);
+
+    const hasToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+
     return NextResponse.json(
-      { error: 'Falha ao enviar imagem para a nuvem.' },
+      {
+        error: 'Falha ao enviar imagem para a nuvem.',
+        details: error.message,
+        debug: {
+          has_token: hasToken,
+          available_keys: Object.keys(process.env).filter(
+            (k) => k.includes('BLOB') || k.includes('TOKEN'),
+          ),
+        },
+      },
       { status: 500 },
     );
   }
