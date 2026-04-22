@@ -42,12 +42,17 @@ export async function isAdminAuthenticated() {
   }
 
   const secret = getAdminSecret();
-  const admins =
-    (await sql`SELECT email, password FROM ifj.admin_users`) as Admin[];
+  try {
+    const admins =
+      (await sql`SELECT email, password FROM ifj.admin_users`) as Admin[];
 
-  return admins.some((admin) =>
-    safeEqual(token, createSessionToken(admin.email, admin.password, secret)),
-  );
+    return admins.some((admin) =>
+      safeEqual(token, createSessionToken(admin.email, admin.password, secret)),
+    );
+  } catch (error) {
+    console.error('❌ Error checking admin authentication:', error);
+    return false;
+  }
 }
 
 export async function loginAdmin(email: string, password: string) {
