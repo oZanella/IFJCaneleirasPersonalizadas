@@ -39,14 +39,19 @@ export async function GET() {
         `,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const dbError =
+      error instanceof Error
+        ? error
+        : new Error('Erro desconhecido na conexão com o banco.');
+
     console.error('❌ Erro no teste de banco de dados:', error);
     return NextResponse.json(
       {
         status: 'error',
         message: 'Falha na conexão com o banco de dados.',
-        error: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+        error: dbError.message,
+        stack: process.env.NODE_ENV === 'development' ? dbError.stack : undefined,
         env_check: {
           has_url: !!(
             process.env.DATABASE_URL ||

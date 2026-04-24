@@ -4,21 +4,59 @@ declare global {
   var __ifjPgPool: Pool | undefined;
 }
 
+const DATABASE_ENV_KEYS = [
+  'IFJ_DATABASE_URL',
+  'DATABASE_URL_FORCE',
+  'DATABASE_URL',
+  'POSTGRES_URL',
+  'IFJ_POSTGRES_URL',
+  'POSTGRES_PRISMA_URL',
+  'IFJ_POSTGRES_PRISMA_URL',
+  'POSTGRES_URL_NON_POOLING',
+  'POSTGRES_URL_NO_SSL',
+] as const;
+
+function getConnectionString() {
+  for (const key of DATABASE_ENV_KEYS) {
+    const value = process.env[key];
+    if (value?.trim()) {
+      return value;
+    }
+  }
+
+  return null;
+}
+
+function shouldUseSsl(connectionString: string) {
+  try {
+    const url = new URL(connectionString);
+    const hostname = url.hostname.toLowerCase();
+    const sslMode = url.searchParams.get('sslmode')?.toLowerCase();
+
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '::1'
+    ) {
+      return false;
+    }
+
+    if (sslMode === 'disable') {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return !connectionString.includes('localhost');
+  }
+}
+
 function getPool() {
   if (globalThis.__ifjPgPool) {
     return globalThis.__ifjPgPool;
   }
 
-  const connectionString =
-    process.env.IFJ_DATABASE_URL ||
-    process.env.DATABASE_URL_FORCE ||
-    process.env.DATABASE_URL ||
-    process.env.POSTGRES_URL ||
-    process.env.IFJ_POSTGRES_URL ||
-    process.env.POSTGRES_PRISMA_URL ||
-    process.env.IFJ_POSTGRES_PRISMA_URL ||
-    process.env.POSTGRES_URL_NON_POOLING ||
-    process.env.POSTGRES_URL_NO_SSL;
+  const connectionString = getConnectionString();
 
   if (!connectionString) {
     if (process.env.NODE_ENV === 'production') {
@@ -38,10 +76,9 @@ function getPool() {
 
   const pool = new Pool({
     connectionString,
-    ssl:
-      process.env.NODE_ENV === 'production'
-        ? { rejectUnauthorized: false }
-        : undefined,
+    ssl: shouldUseSsl(connectionString)
+      ? { rejectUnauthorized: false }
+      : undefined,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,

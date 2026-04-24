@@ -20,6 +20,10 @@ function sanitizeFileName(name: string) {
   return `${baseName || 'produto'}-${Date.now()}${extension}`;
 }
 
+function hasBlobToken() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim());
+}
+
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });
@@ -38,14 +42,26 @@ export async function POST(request: Request) {
 
     const fileName = sanitizeFileName(file.name);
 
-    // Híbrido: Se for desenvolvimento, salva local. Se for produção, usa Vercel Blob.
-    if (process.env.NODE_ENV === 'development') {
+    if (hasBlobToken()) {
+      const blob = await put(fileName, file, {
+        access: 'public',
+        addRandomSuffix: true,
+      });
+
+      revalidatePath('/');
+
+      return NextResponse.json({
+        imagePath: blob.url,
+      });
+    }
+
+    // Fallback local quando o token do Blob nao estiver configurado.
+    if (process.env.NODE_ENV !== 'production') {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
       const publicDir = path.join(process.cwd(), 'public', 'uploads');
 
-      // Garantir que a pasta de uploads existe localmente
       try {
         await fs.access(publicDir);
       } catch {
@@ -60,28 +76,27 @@ export async function POST(request: Request) {
       });
     }
 
-    // Produção: Upload para o Vercel Blob
-    const blob = await put(fileName, file, {
-      access: 'public',
-      addRandomSuffix: true,
-    });
+    return NextResponse.json(
+      {
+        error:
+          'BLOB_READ_WRITE_TOKEN não está configurado no ambiente de produção.',
+      },
+      { status: 500 },
+    );
+  } catch (error: unknown) {
+    const uploadError =
+      error instanceof Error
+        ? error
+        : new Error('Erro desconhecido durante o upload.');
 
-    revalidatePath('/');
-
-    return NextResponse.json({
-      imagePath: blob.url,
-    });
-  } catch (error: any) {
     console.error('❌ Erro no upload para o Vercel Blob:', error);
-
-    const hasToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
     return NextResponse.json(
       {
         error: 'Falha ao enviar imagem para a nuvem.',
-        details: error.message,
+        details: uploadError.message,
         debug: {
-          has_token: hasToken,
+          has_token: hasBlobToken(),
           available_keys: Object.keys(process.env).filter(
             (k) => k.includes('BLOB') || k.includes('TOKEN'),
           ),
