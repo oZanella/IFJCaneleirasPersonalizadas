@@ -57,9 +57,11 @@ export function ProductCard({ product, index }: ProductCardProps) {
                   {product.category}
                 </p>
               ) : null}
-              <p className="mt-4 text-sm leading-6 text-black/68 whitespace-pre-line">
-                {product.description}
-              </p>
+              {product.description ? (
+                <p className="mt-4 text-sm leading-6 text-black/68 whitespace-pre-line">
+                  {product.description}
+                </p>
+              ) : null}
             </div>
 
             <div className="mt-7">

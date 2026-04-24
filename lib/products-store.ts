@@ -33,7 +33,7 @@ function mapRowToProduct(row: ProductRow): Product {
     category: row.category || undefined,
     price: Number(row.price),
     installment: row.installment || undefined,
-    description: row.description,
+    description: row.description || undefined,
     highlight: row.highlight || undefined,
     image: row.image || undefined,
     textImage: row.text_image || undefined,
@@ -46,7 +46,7 @@ type ProductRow = {
   category: string | null;
   price: string | number;
   installment: string | null;
-  description: string;
+  description: string | null;
   highlight: string | null;
   image: string | null;
   text_image: string | null;
@@ -111,9 +111,6 @@ function normalizeProductInput(
   const name = input.name.trim();
   if (!name) throw new Error('Informe o nome do produto.');
 
-  const description = input.description.trim();
-  if (!description) throw new Error('Informe a descrição do produto.');
-
   const normalizedSection = normalizeSection(section);
   const price = parsePrice(input.price);
 
@@ -126,7 +123,7 @@ function normalizeProductInput(
     category: normalizeOptionalText(input.category),
     price,
     installment: normalizeOptionalText(input.installment),
-    description,
+    description: input.description?.trim() ?? '',
     highlight: normalizeOptionalText(input.highlight),
     image: normalizeOptionalText(input.image),
     textImage: normalizeOptionalText(input.textImage),
@@ -213,7 +210,7 @@ export async function createProduct(
     category: normalized.category ?? undefined,
     price: normalized.price,
     installment: normalized.installment ?? undefined,
-    description: normalized.description,
+    description: normalized.description || undefined,
     highlight: normalized.highlight ?? undefined,
     image: normalized.image ?? undefined,
     textImage: normalized.textImage ?? undefined,
@@ -251,7 +248,7 @@ export async function updateProduct(
     category: normalized.category ?? undefined,
     price: normalized.price,
     installment: normalized.installment ?? undefined,
-    description: normalized.description,
+    description: normalized.description || undefined,
     highlight: normalized.highlight ?? undefined,
     image: normalized.image ?? undefined,
     textImage: normalized.textImage ?? undefined,

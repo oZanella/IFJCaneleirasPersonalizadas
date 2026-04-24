@@ -75,7 +75,7 @@ function buildDraft(
     category: product.category ?? '',
     price: formatCurrencyInput(String(Math.round(product.price * 100))),
     installmentValue: installmentDetails.value,
-    description: product.description,
+    description: product.description ?? '',
     highlight: product.highlight ?? '',
     image: product.image ?? '',
     textImage: product.textImage ?? '',
@@ -157,6 +157,7 @@ function parseCurrencyInput(value: string) {
 
 export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
   const router = useRouter();
+  const catalogSectionRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [draft, setDraft] = useState<ProductDraft>({ ...emptyDraft });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -314,7 +315,10 @@ export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
   }
 
   return (
-    <div className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-emerald-500/20 bg-[#0d0d0d] p-4 shadow-2xl sm:p-7">
+    <div
+      ref={catalogSectionRef}
+      className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-emerald-500/20 bg-[#0d0d0d] p-4 shadow-2xl sm:p-7"
+    >
       {/* Background decoration */}
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-[80px]" />
       <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-[80px]" />
@@ -503,13 +507,13 @@ export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
             </Field>
 
             <div className="sm:col-span-2">
-              <Field label="Descrição Completa">
+              <Field label="Descrição do produto">
                 <textarea
                   value={draft.description}
                   onChange={(event) =>
                     updateField('description', event.target.value)
                   }
-                  className="admin-input-revised h-auto! min-h-35 !py-4 resize-none"
+                  className="admin-input-revised h-auto! min-h-35 py-4! resize-none"
                 />
               </Field>
             </div>
@@ -617,7 +621,10 @@ export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
                       setInstallmentCount(installmentDetails.count);
                       setError('');
                       setToastMessage('');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      catalogSectionRef.current?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
                     }}
                     className="flex-1 cursor-pointer rounded-xl bg-white/5 px-3 py-2 text-[0.65rem] font-bold uppercase tracking-widest text-white/50 transition hover:bg-white/10 hover:text-white"
                   >
