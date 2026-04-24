@@ -13,7 +13,9 @@ export async function GET() {
       env_check: {
         has_url: !!(
           process.env.DATABASE_URL ||
+          process.env.DATABASE_URL_FORCE ||
           process.env.IFJ_DATABASE_URL ||
+          process.env.IFJ_DATABASE_URL_PERSONALIZADO ||
           process.env.POSTGRES_URL ||
           process.env.IFJ_POSTGRES_URL
         ),
@@ -55,7 +57,9 @@ export async function GET() {
         env_check: {
           has_url: !!(
             process.env.DATABASE_URL ||
+            process.env.DATABASE_URL_FORCE ||
             process.env.IFJ_DATABASE_URL ||
+            process.env.IFJ_DATABASE_URL_PERSONALIZADO ||
             process.env.POSTGRES_URL ||
             process.env.IFJ_POSTGRES_URL
           ),
