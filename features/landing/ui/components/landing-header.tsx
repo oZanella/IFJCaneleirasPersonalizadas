@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { AdminSessionControls } from '@/features/landing/ui/components/admin-session-controls';
 import { navigationItems } from '@/features/landing/data/landing-content';
 import { Menu, X } from 'lucide-react';
@@ -35,7 +34,7 @@ export function LandingHeader({ isAdmin }: LandingHeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/80 backdrop-blur-md">
       {toastMessage ? (
-        <div className="fixed bottom-5 left-1/2 z-[80] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl border border-emerald-300/20 bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-black shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+        <div className="fixed bottom-5 left-1/2 z-80 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl border border-emerald-300/20 bg-emerald-400 px-4 py-3 text-center text-sm font-semibold text-black shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
           {toastMessage}
         </div>
       ) : null}
