@@ -67,16 +67,14 @@ function buildDraft(
     return { ...emptyDraft, section };
   }
 
-  const installmentMatch = product.installment?.match(
-    /ou\s+(\d+)x?\s+de\s+R\$\s*([\d.,]+)/i,
-  );
+  const installmentDetails = extractInstallmentDetails(product.installment);
 
   return {
     section,
     name: product.name,
     category: product.category ?? '',
     price: formatCurrencyInput(String(Math.round(product.price * 100))),
-    installmentValue: installmentMatch?.[2] ?? '',
+    installmentValue: installmentDetails.value,
     description: product.description,
     highlight: product.highlight ?? '',
     image: product.image ?? '',
@@ -112,6 +110,15 @@ function buildInstallmentTextWithValue(
   }
 
   return `ou ${times}x de ${formatPrice(installmentValue)}`;
+}
+
+function extractInstallmentDetails(installment?: string) {
+  const match = installment?.match(/(?:ou\s+)?(\d+)x?\s+de\s+R\$\s*([\d.,]+)/i);
+
+  return {
+    count: match?.[1] ?? '',
+    value: match?.[2] ?? '',
+  };
 }
 
 function getDefaultInstallmentValue(priceValue: string, timesValue: string) {
@@ -532,7 +539,7 @@ export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
             <Button
               type="submit"
               className={`w-full cursor-pointer shadow-lg shadow-emerald-500/10 sm:min-w-[180px] sm:w-auto ${isSubmitting ? 'opacity-50' : ''}`}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
             >
               {isSubmitting
                 ? 'Salvando...'
@@ -601,9 +608,13 @@ export function AdminProductsPanel({ products }: AdminProductsPanelProps) {
                   <button
                     type="button"
                     onClick={() => {
+                      const installmentDetails = extractInstallmentDetails(
+                        product.installment,
+                      );
+
                       setEditingId(product.id);
                       setDraft(buildDraft(product, section));
-                      setInstallmentCount('');
+                      setInstallmentCount(installmentDetails.count);
                       setError('');
                       setToastMessage('');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
