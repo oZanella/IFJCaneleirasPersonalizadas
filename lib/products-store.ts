@@ -53,6 +53,20 @@ type ProductRow = {
   section: string;
 };
 
+type NormalizedProductInput = {
+  name: string;
+  category: string | null;
+  price: number;
+  installment: string | null;
+  description: string;
+  highlight: string | null;
+  image: string | null;
+  textImage: string | null;
+  section: ProductSection;
+};
+
+const VALID_SECTIONS: ProductSection[] = ['customProducts', 'storeProducts'];
+
 function slugify(value: string) {
   return value
     .normalize('NFD')
@@ -75,6 +89,49 @@ function parsePrice(value: number | string) {
   const parsed = Number(normalized);
 
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function normalizeOptionalText(value: string | null | undefined) {
+  const normalized = value?.trim();
+  return normalized ? normalized : null;
+}
+
+function normalizeSection(section: string): ProductSection {
+  if (VALID_SECTIONS.includes(section as ProductSection)) {
+    return section as ProductSection;
+  }
+
+  throw new Error('Seção inválida para o produto.');
+}
+
+function normalizeProductInput(
+  section: ProductSection,
+  input: ProductInput,
+): NormalizedProductInput {
+  const name = input.name.trim();
+  if (!name) throw new Error('Informe o nome do produto.');
+
+  const description = input.description.trim();
+  if (!description) throw new Error('Informe a descrição do produto.');
+
+  const normalizedSection = normalizeSection(section);
+  const price = parsePrice(input.price);
+
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new Error('Informe um preço válido.');
+  }
+
+  return {
+    name,
+    category: normalizeOptionalText(input.category),
+    price,
+    installment: normalizeOptionalText(input.installment),
+    description,
+    highlight: normalizeOptionalText(input.highlight),
+    image: normalizeOptionalText(input.image),
+    textImage: normalizeOptionalText(input.textImage),
+    section: normalizedSection,
+  };
 }
 
 async function ensureUniqueId(baseName: string, ignoreId?: string) {
@@ -136,34 +193,30 @@ export async function createProduct(
   section: ProductSection,
   input: ProductInput,
 ) {
-  const name = input.name.trim();
-  if (!name) throw new Error('Informe o nome do produto.');
+  const normalized = normalizeProductInput(section, input);
 
-  const price = parsePrice(input.price);
-  if (!price || price < 0) throw new Error('Informe um preço válido.');
-
-  const id = await ensureUniqueId(name);
+  const id = await ensureUniqueId(normalized.name);
 
   await sql`
     INSERT INTO ifj.products (
       id, name, category, price, installment, description, highlight, image, text_image, section
     ) VALUES (
-      ${id}, ${name}, ${input.category || null}, ${price}, ${input.installment || null}, 
-      ${input.description}, ${input.highlight || null}, ${input.image || null}, 
-      ${input.textImage || null}, ${section}
+      ${id}, ${normalized.name}, ${normalized.category}, ${normalized.price}, ${normalized.installment}, 
+      ${normalized.description}, ${normalized.highlight}, ${normalized.image}, 
+      ${normalized.textImage}, ${normalized.section}
     )
   `;
 
   return {
     id,
-    name,
-    category: input.category,
-    price,
-    installment: input.installment,
-    description: input.description,
-    highlight: input.highlight,
-    image: input.image,
-    textImage: input.textImage,
+    name: normalized.name,
+    category: normalized.category ?? undefined,
+    price: normalized.price,
+    installment: normalized.installment ?? undefined,
+    description: normalized.description,
+    highlight: normalized.highlight ?? undefined,
+    image: normalized.image ?? undefined,
+    textImage: normalized.textImage ?? undefined,
   };
 }
 
@@ -172,40 +225,36 @@ export async function updateProduct(
   section: ProductSection,
   input: ProductInput,
 ) {
-  const name = input.name.trim();
-  if (!name) throw new Error('Informe o nome do produto.');
+  const normalized = normalizeProductInput(section, input);
 
-  const price = parsePrice(input.price);
-  if (!price || price < 0) throw new Error('Informe um preço válido.');
-
-  const newId = await ensureUniqueId(name, id);
+  const newId = await ensureUniqueId(normalized.name, id);
 
   await sql`
     UPDATE ifj.products SET
       id = ${newId},
-      name = ${name},
-      category = ${input.category || null},
-      price = ${price},
-      installment = ${input.installment || null},
-      description = ${input.description},
-      highlight = ${input.highlight || null},
-      image = ${input.image || null},
-      text_image = ${input.textImage || null},
-      section = ${section},
+      name = ${normalized.name},
+      category = ${normalized.category},
+      price = ${normalized.price},
+      installment = ${normalized.installment},
+      description = ${normalized.description},
+      highlight = ${normalized.highlight},
+      image = ${normalized.image},
+      text_image = ${normalized.textImage},
+      section = ${normalized.section},
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
   `;
 
   return {
     id: newId,
-    name,
-    category: input.category,
-    price,
-    installment: input.installment,
-    description: input.description,
-    highlight: input.highlight,
-    image: input.image,
-    textImage: input.textImage,
+    name: normalized.name,
+    category: normalized.category ?? undefined,
+    price: normalized.price,
+    installment: normalized.installment ?? undefined,
+    description: normalized.description,
+    highlight: normalized.highlight ?? undefined,
+    image: normalized.image ?? undefined,
+    textImage: normalized.textImage ?? undefined,
   };
 }
 

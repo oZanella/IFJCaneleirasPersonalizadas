@@ -20,11 +20,28 @@ function getConnectionString() {
   for (const key of DATABASE_ENV_KEYS) {
     const value = process.env[key];
     if (value?.trim()) {
-      return value;
+      return normalizeConnectionString(value);
     }
   }
 
   return null;
+}
+
+function normalizeConnectionString(connectionString: string) {
+  try {
+    const url = new URL(connectionString);
+    const sslMode = url.searchParams.get('sslmode')?.toLowerCase();
+    const hasLibpqCompat = url.searchParams.has('uselibpqcompat');
+
+    // Avoid pg/pg-connection-string warning for sslmode=require.
+    if (sslMode === 'require' && !hasLibpqCompat) {
+      url.searchParams.set('uselibpqcompat', 'true');
+    }
+
+    return url.toString();
+  } catch {
+    return connectionString;
+  }
 }
 
 function shouldUseSsl(connectionString: string) {
