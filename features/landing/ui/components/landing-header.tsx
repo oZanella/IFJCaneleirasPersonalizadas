@@ -46,10 +46,10 @@ export function LandingHeader({ isAdmin }: LandingHeaderProps) {
             className="group flex flex-col items-start leading-none"
           >
             <span className="text-2xl font-black uppercase tracking-[0.3em] text-white transition group-hover:text-zinc-400 sm:text-3xl">
-              IFJ
+              IFJ Caneleiras
             </span>
             <span className="mt-1 text-[0.5rem] font-medium uppercase tracking-[0.4em] text-zinc-500 sm:text-[0.6rem]">
-              Premium Custom
+              Fernando Machado
             </span>
           </a>
         </div>
